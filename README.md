@@ -21,9 +21,16 @@ It is required to develop a Mobile Controlled Car. The car allow easy driving wi
 * The minimum requirements is to use simple closed track.
 * Bonus, for complex tracks with crossing points and sharp curves of radius less than 25 cm.
 
-## Usage
+#### Advanced Applications (Bonus)
+* Use GSM Shield to control car motion via mobile internet at open areas.
+* Use WiFi Shield to control car motion via wifi internet at closed areas.
+* Use GPS to retrieve car location at open areas.
+* Use Camera and capture video stream from car to allow remote car driving.
+* Use Camera and process image to avoid obstacles, recognize signs and avoid fall over.
+* Integrate RF transmitter/receiver and make long distance remote control.
+* Use multiple proximity sensors and implement auto park.
+* Implement custom printed circuit board with Arduino chip and replace the driving board of existing car toy with smart one.
 
-TODO: Write usage instructions
 
 ## Contributing
 
