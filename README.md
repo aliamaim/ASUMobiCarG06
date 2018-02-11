@@ -5,7 +5,9 @@ It is required to develop a Mobile Controlled Car. The car allow easy driving wi
 ## Installation
 
 ###Outline:
+
 ####Easy Driving Application
+
 *User should press a button on car or submit special Bluetooth command to put the car in easy driving mode.
 *User can control car movement using mobile.
 *User can move the car forward, backward, left and right.
@@ -14,6 +16,7 @@ It is required to develop a Mobile Controlled Car. The car allow easy driving wi
 *Bonus, for better avoidance techniques.
 
 ####Line Tracking Application
+
 *Students should prepare set of connected white sheets (2m x 2m) and draw track over it.
 *User should press a button on car or submit special Bluetooth command to put the car in line tracking mode.
 *When the car placed over the track it should follow the line.
