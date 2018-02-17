@@ -48,6 +48,14 @@ TODO: Write history
 
 TODO: Write credits
 
-## License
-
-TODO: Write license
+## Contributors
+-Ali Amr
+-Salma Mounib
+-Salma Diaa
+-Salma Tarek
+-Salma Alaa
+-Seif Mohsen
+-Mostafa Mohamed
+-Rahma Abdelhamed
+-Shehab Fouad
+-Shahd Zayed
