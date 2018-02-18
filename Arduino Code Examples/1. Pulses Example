@@ -1,9 +1,14 @@
-
-void setup() {
-
+//We are going to use pin number 4 to take the output from
+void setup() 
+{
+// initialize serial communication at 9600 bits per second:
+Serial.begin(9600);
+//Setting pin 4 to output mode.
+pinMode(4, OUTPUT);
 }
 
-void loop() {
+void loop() 
+{
 
 }
 
