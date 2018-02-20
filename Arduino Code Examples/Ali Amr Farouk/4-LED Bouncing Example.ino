@@ -19,7 +19,7 @@ void loop() {
     digitalWrite(i, LOW);
   }
   //Flashes the pins from 7 to 4 in order
-  while(int j = 7; j > 3; j--)
+  for(int j = 7; j > 3; j--)
   {
     digitalWrite(j, HIGH);
     delay(100);
