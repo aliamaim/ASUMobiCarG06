@@ -1,5 +1,4 @@
 
-  int i = 0;
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
@@ -12,45 +11,19 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  while(i == 0)
+  //Flashes the pins from 4 to 7 in order
+  for(int i = 4; i < 8; i++)
   {
-  //Blinking the led on pin 4
-  digitalWrite(4, HIGH);  
-  delay(100);                       
-  digitalWrite(4, LOW);  
-  //Blinking the led on pin 5
-  digitalWrite(5, HIGH);  
-  delay(100);                       
-  digitalWrite(5, LOW); 
-  //Blinking the led on pin 6
-  digitalWrite(6, HIGH);  
-  delay(100);                       
-  digitalWrite(6, LOW);
-  //Blinking the led on pin 7
-  digitalWrite(7, HIGH);  
-  delay(100);                       
-  digitalWrite(7, LOW); 
-  i = 1; 
+    digitalWrite(i, HIGH);
+    delay(100);
+    digitalWrite(i, LOW);
   }
-  while(i == 1)
+  //Flashes the pins from 7 to 4 in order
+  while(int j = 7; j > 3; j--)
   {
-  //Blinking the led on pin 4
-  digitalWrite(7, HIGH);  
-  delay(100);                       
-  digitalWrite(7, LOW);  
-  //Blinking the led on pin 5
-  digitalWrite(6, HIGH);  
-  delay(100);                       
-  digitalWrite(6, LOW); 
-  //Blinking the led on pin 6
-  digitalWrite(5, HIGH);  
-  delay(100);                       
-  digitalWrite(5, LOW);
-  //Blinking the led on pin 7
-  digitalWrite(4, HIGH);  
-  delay(100);                       
-  digitalWrite(4, LOW);  
-  i = 0;
+    digitalWrite(j, HIGH);
+    delay(100);
+    digitalWrite(j, LOW);
   }
    
 }
