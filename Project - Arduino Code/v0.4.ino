@@ -1,8 +1,8 @@
 
 
   //controls the speed of the motors
-  const int Left_Speed = 2;
-  const int Right_Speed = 3;
+  const int Left_Speed = 3;
+  const int Right_Speed = 2;
   //Front wheels
   const int Motor_Front1 = 23;
   const int Motor_Front2 = 22;
@@ -29,19 +29,19 @@ void setup()
    pinMode(Motor_Back1, OUTPUT);
    pinMode(Motor_Back2, OUTPUT);
 
+   pinMode(Left_Speed, OUTPUT);
+   pinMode(Right_Speed, OUTPUT);
+
 
   
 }
 
 void loop() 
 {
-digitalWrite(Motor_Front1, LOW);
-digitalWrite(Motor_Front2, HIGH);
-digitalWrite(Motor_Back1, LOW);
-digitalWrite(Motor_Back2, HIGH);
+
 }
 
-void forward(int value1, int value2)
+void forward(int leftValue, int rightValue)
 {
   //Making all the motors go forward
   digitalWrite(Motor_Front1, LOW);
@@ -50,8 +50,8 @@ void forward(int value1, int value2)
   digitalWrite(Motor_Back2, HIGH);
 
   //Controlling the speed of the motors
-  analogWrite(Left_Speed, value1);
-  analogWrite(Right_Speed, value2);
+  analogWrite(Left_Speed, leftValue);
+  analogWrite(Right_Speed, rightValue);
 }
 
 void moveRight(int value)
@@ -63,5 +63,4 @@ void moveLeft(int value)
 {
   forward(value, 255);
 }
-
 
