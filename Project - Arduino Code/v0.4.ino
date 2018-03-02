@@ -53,7 +53,7 @@ void forward(int leftValue, int rightValue)
   analogWrite(Left_Speed, leftValue);
   analogWrite(Right_Speed, rightValue);
 }
-void moveLeft()
+void Backward()
 {
   //Making all motors go Backword
   digitalWrite(Motor_Front1,HIGH);
