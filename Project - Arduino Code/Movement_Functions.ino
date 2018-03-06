@@ -33,6 +33,10 @@ void setup()
 
   
 }
+
+void loop() {
+}
+
 void forward(int leftValue, int rightValue)
 {
   //Making all the motors go forward
