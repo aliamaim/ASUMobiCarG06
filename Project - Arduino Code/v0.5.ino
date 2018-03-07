@@ -1,89 +1,14 @@
 
-
-  //controls the speed of the motors
-  const int Left_Speed = 3;
-  const int Right_Speed = 2;
-  //Front wheels
-  const int Motor_Front1 = 23;
-  const int Motor_Front2 = 22;
-  //Back right wheel
-  const int Motor_Back1 = 24;
-  const int Motor_Back2 = 25;
-
-
-
-void setup()
-{
-
-//Motor_Driver
-   //Motor_Front1 & Motor_Front2 controls the front wheels(in1 & in2)
-   //Motor_Front1 OFF & Motor_Front2 ON means FORWARD
-   //Motor_Front1 ON & Motor_Front2 OFF means BACKWARD
-   //Both pins OFF/ON means STOP
-   pinMode(Motor_Front1, OUTPUT);
-   pinMode(Motor_Front2, OUTPUT);
-   //Motor_Back1 & Motor_Back2 controls the back wheels(in3 & in4)
-   //Motor_Back1 OFF & Motor_Back2 ON means FORWARD
-   //Motor_Back1 ON & Motor_Back2 OFF means BACKWARD
-   //Both pins OFF/ON means STOP
-   pinMode(Motor_Back1, OUTPUT);
-   pinMode(Motor_Back2, OUTPUT);
-
-   pinMode(Left_Speed, OUTPUT);
-   pinMode(Right_Speed, OUTPUT);
-
-
-  
-}
-
-void loop() 
-{
-
-}
-
-void forward(int leftValue, int rightValue)
-{
-  //Making all the motors go forward
-  digitalWrite(Motor_Front1, LOW);
-  digitalWrite(Motor_Front2, HIGH);
-  digitalWrite(Motor_Back1, LOW);
-  digitalWrite(Motor_Back2, HIGH);
-
-  //Controlling the speed of the motors
-  analogWrite(Left_Speed, leftValue);
-  analogWrite(Right_Speed, rightValue);
-}
-void backward()
-{
-  //Making all motors go Backward
-  digitalWrite(Motor_Front1,HIGH);
-  digitalWrite(Motor_Front2,LOW);
-  digitalWrite(Motor_Back1,HIGH);
-  digitalWrite(Motor_Back2,LOW) ;
-  //controlling the speed of the motors
-  analogWrite(Left_Speed,155);
-  analogWrite(Right_Speed,155);
-}
-void moveRight(int value)
-{
-  forward(255, value);
-}
-
-void moveLeft(int value)
-{
-  forward(value, 255);
-}
-
 //Motor Driver
   //controls the speed of the motors
    const int Left_Speed = 3;
    const int Right_Speed = 2;
    //Front wheels
-   const int Motor_Front1 = 23;
-   const int Motor_Front2 = 22;
+   const int Motor_Left1 = 23;
+   const int Motor_Left2 = 22;
    //Back right wheel
-   const int Motor_Back1 = 24;
-   const int Motor_Back2 = 25;
+   const int Motor_Right1 = 24;
+   const int Motor_Right2 = 25;
  
 //Ultrasonic
    const int trigPin = 9;
@@ -101,18 +26,18 @@ void moveLeft(int value)
     Serial.begin(9600); // Starts the serial communication
  
  //Motor_Driver
-    //Motor_Front1 & Motor_Front2 controls the front wheels(in1 & in2)
-    //Motor_Front1 OFF & Motor_Front2 ON means FORWARD
-    //Motor_Front1 ON & Motor_Front2 OFF means BACKWARD
+    //Motor_Left1 & Motor_Left2 controls the left wheels(in1 & in2)
+    //Motor_Left1 OFF & Motor_Left2 ON means FORWARD
+    //Motor_Left1 ON & Motor_Left2 OFF means BACKWARD
     //Both pins OFF/ON means STOP
-    pinMode(Motor_Front1, OUTPUT);
-    pinMode(Motor_Front2, OUTPUT);
-    //Motor_Back1 & Motor_Back2 controls the back wheels(in3 & in4)
-    //Motor_Back1 OFF & Motor_Back2 ON means FORWARD
-    //Motor_Back1 ON & Motor_Back2 OFF means BACKWARD
+    pinMode(Motor_Left1, OUTPUT);
+    pinMode(Motor_Left2, OUTPUT);
+    //Motor_Right1 & Motor_Right2 controls the right wheels(in3 & in4)
+    //Motor_Right1 OFF & Motor_Right2 ON means FORWARD
+    //Motor_Right1 ON & Motor_Right2 OFF means BACKWARD
     //Both pins OFF/ON means STOP
-    pinMode(Motor_Back1, OUTPUT);
-    pinMode(Motor_Back2, OUTPUT);
+    pinMode(Motor_Right1, OUTPUT);
+    pinMode(Motor_Right2, OUTPUT);
  
     pinMode(Left_Speed, OUTPUT);
     pinMode(Right_Speed, OUTPUT);
@@ -151,16 +76,17 @@ void moveLeft(int value)
    Serial.print("Distance: ");
    Serial.println(distance);
 // End of Ultrasonic
+
  
  }
  
  void forward(int leftValue, int rightValue)
  {
    //Making all the motors go forward
-   digitalWrite(Motor_Front1, LOW);
-   digitalWrite(Motor_Front2, HIGH);
-   digitalWrite(Motor_Back1, LOW);
-   digitalWrite(Motor_Back2, HIGH);
+   digitalWrite(Motor_Left1, LOW);
+   digitalWrite(Motor_Left2, HIGH);
+   digitalWrite(Motor_Right1, LOW);
+   digitalWrite(Motor_Right2, HIGH);
  
    //Controlling the speed of the motors
    analogWrite(Left_Speed, leftValue);
@@ -169,10 +95,10 @@ void moveLeft(int value)
  void backward()
  {
    //Making all motors go Backward
-   digitalWrite(Motor_Front1,HIGH);
-   digitalWrite(Motor_Front2,LOW);
-   digitalWrite(Motor_Back1,HIGH);
-   digitalWrite(Motor_Back2,LOW) ;
+   digitalWrite(Motor_Left1,HIGH);
+   digitalWrite(Motor_Left2,LOW);
+   digitalWrite(Motor_Right1,HIGH);
+   digitalWrite(Motor_Right2,LOW) ;
    //controlling the speed of the motors
    analogWrite(Left_Speed,155);
    analogWrite(Right_Speed,155);
@@ -187,7 +113,5 @@ void moveLeft(int value)
    forward(value, 255);
  }
  
-
-
 
 
