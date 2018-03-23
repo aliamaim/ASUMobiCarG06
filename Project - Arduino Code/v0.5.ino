@@ -17,6 +17,8 @@
    long duration;
    int distance;
 
+// Bluetooth
+char M;
  
  
  
@@ -53,8 +55,8 @@
  }
  
  void loop() 
- {
-
+ {  
+ 
 
 // *** Ultrasonic ***  
    // Clears the trigPin
@@ -76,7 +78,30 @@
    Serial.print("Distance: ");
    Serial.println(distance);
 // End of Ultrasonic
-
+   
+     //***BLUETOOTH***
+   
+if (Serial.available()>0);
+  
+ M= Serial.read();
+ switch(M)
+ {
+case 'F':
+forward(155,155);
+break;
+case 'B':
+backward();
+break;
+case 'L':
+moveLeft(155);
+break;
+case 'R':
+moveRight(155);
+break;
+case 'S':
+Stop();
+}
+  
  
  }
  
@@ -112,6 +137,15 @@
  {
    forward(value, 255);
  }
- 
+
+ void Stop() 
+{ 
+   //all motors stop
+   digitalWrite(Motor_Left1,LOW);
+   digitalWrite(Motor_Left2,LOW);
+   digitalWrite(Motor_Right1,LOW);
+   digitalWrite(Motor_Right2,LOW);
+  }
+  
 
 
