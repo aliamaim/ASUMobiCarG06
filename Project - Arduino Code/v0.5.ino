@@ -16,7 +16,8 @@
      
    long duration;
    int distance;
-
+//Bluethooth
+char M;
  
  
  
@@ -25,11 +26,10 @@
    //bluetooth
    pinMode(9, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
   digitalWrite(9, HIGH);
-  Serial.begin(9600);
-  Serial.println("Enter AT commands:");
-  BTSerial.begin(38400);  // HC-05 default speed in AT command more
+ 
 
     Serial.begin(9600); // Starts the serial communication
+   
  
  //Motor_Driver
     //Motor_Left1 & Motor_Left2 controls the left wheels(in1 & in2)
@@ -77,20 +77,32 @@
 
    // Calculating the distance
    distance= duration*0.034/2;
-
-   // Prints the distance on the Serial Monitor
-   Serial.print("Distance: ");
-   Serial.println(distance);
+ 
 // End of Ultrasonic
 
    //bluetooth
-   // Keep reading from HC-05 and send to Arduino Serial Monitor
-  if (BTSerial.available())
-    Serial.write(BTSerial.read());
-
-  // Keep reading from Arduino Serial Monitor and send to HC-05
-  if (Serial.available())
-    BTSerial.write(Serial.read());
+  
+   //BLUETOOTH
+    if (Serial.available()>0);
+     M= Serial.read();
+ 
+ switch(M)
+ {
+case 'F':
+forward(255,255);
+break;
+case 'B':
+backward();
+break;
+case 'L':
+moveLeft(120);
+break;
+case 'R':
+moveRight(120);
+break;
+case 'S':
+Stop();
+}
  
  }
  
@@ -126,6 +138,12 @@
  {
    forward(value, 255);
  }
- 
+ void Stop() 
+{ 
+   digitalWrite(Motor_Left1,LOW);
+   digitalWrite(Motor_Left2,LOW);
+   digitalWrite(Motor_Right1,LOW);
+   digitalWrite(Motor_Right2,LOW);
+  }
 
 
