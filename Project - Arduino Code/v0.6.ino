@@ -1,4 +1,3 @@
-
 //Motor Driver
   //controls the speed of the motors
    const int Left_Speed = 3;
@@ -24,8 +23,8 @@ char M;
  void setup()
  {
    //bluetooth
-   pinMode(9, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
-  digitalWrite(9, HIGH);
+   pinMode(13, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
+  digitalWrite(13, HIGH);
  
 
     Serial.begin(9600); // Starts the serial communication
@@ -52,11 +51,6 @@ char M;
 //Ultrasonic
     pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
     pinMode(echoPin, INPUT); // Sets the echoPin as an Input
-    if (distance==50)
-    {
-      Stop();
-      
-    }
 
  
  
@@ -90,27 +84,26 @@ char M;
    //BLUETOOTH
     if (Serial.available()>0)
     {     
-      M= Serial.read();
+       M = Serial.read();
+       switch(M)
+       {
+       case 'F':
+        forward(255,255);
+        break;
+       case 'B':
+        backward();
+        break;
+       case 'L':
+        moveLeft(120);
+        break;
+       case 'R':
+        moveRight(120);
+        break;
+       case 'S':
+        Stop();
+       }
     }
 
- 
- switch(M)
- {
-case 'F':
-forward(255,255);
-break;
-case 'B':
-backward();
-break;
-case 'L':
-moveLeft(120);
-break;
-case 'R':
-moveRight(120);
-break;
-case 'S':
-Stop();
-}
  
  }
  
@@ -153,5 +146,3 @@ Stop();
    digitalWrite(Motor_Right1,LOW);
    digitalWrite(Motor_Right2,LOW);
   }
-
-
