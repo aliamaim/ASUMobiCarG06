@@ -88,8 +88,11 @@ char M;
    //bluetooth
   
    //BLUETOOTH
-    if (Serial.available()>0);
-     M= Serial.read();
+    if (Serial.available()>0)
+    {     
+      M= Serial.read();
+    }
+
  
  switch(M)
  {
