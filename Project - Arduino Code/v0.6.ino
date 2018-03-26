@@ -22,9 +22,6 @@ char M;
  
  void setup()
  {
-   //bluetooth
-   pinMode(13, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
-  digitalWrite(13, HIGH);
  
 
     Serial.begin(9600); // Starts the serial communication
@@ -32,14 +29,14 @@ char M;
  
  //Motor_Driver
     //Motor_Left1 & Motor_Left2 controls the left wheels(in1 & in2)
-    //Motor_Left1 OFF & Motor_Left2 ON means FORWARD
-    //Motor_Left1 ON & Motor_Left2 OFF means BACKWARD
+    //Motor_Left1 ON & Motor_Left2 OFF means FORWARD
+    //Motor_Left1 OFF & Motor_Left2 ON means BACKWARD
     //Both pins OFF/ON means STOP
     pinMode(Motor_Left1, OUTPUT);
     pinMode(Motor_Left2, OUTPUT);
     //Motor_Right1 & Motor_Right2 controls the right wheels(in3 & in4)
-    //Motor_Right1 OFF & Motor_Right2 ON means FORWARD
-    //Motor_Right1 ON & Motor_Right2 OFF means BACKWARD
+    //Motor_Right1 ON & Motor_Right2 OFF means FORWARD
+    //Motor_Right1 OFF & Motor_Right2 ON means BACKWARD
     //Both pins OFF/ON means STOP
     pinMode(Motor_Right1, OUTPUT);
     pinMode(Motor_Right2, OUTPUT);
@@ -74,12 +71,12 @@ char M;
    // Reads the echoPin, returns the sound wave travel time in microseconds
    duration = pulseIn(echoPin, HIGH);
 
-   // Calculating the distance
+   // Calculating the distance in cm
    distance= duration*0.034/2;
  
 // End of Ultrasonic
 
-   //bluetooth
+
   
    //BLUETOOTH
     if (Serial.available()>0)
@@ -94,14 +91,24 @@ char M;
         backward();
         break;
        case 'L':
-        moveLeft(120);
+        moveLeft(200);
         break;
        case 'R':
-        moveRight(120);
+        moveRight(200);
         break;
        case 'S':
         Stop();
        }
+    }
+
+//Ultrasonic reaction
+    if (distance <= 30 && distance > 15)
+    {
+      forward(150,150);
+    }
+    else if(distance <= 15)
+    {
+      Stop();
     }
 
  
@@ -110,10 +117,10 @@ char M;
  void forward(int leftValue, int rightValue)
  {
    //Making all the motors go forward
-   digitalWrite(Motor_Left1, LOW);
-   digitalWrite(Motor_Left2, HIGH);
-   digitalWrite(Motor_Right1, LOW);
-   digitalWrite(Motor_Right2, HIGH);
+   digitalWrite(Motor_Left1, HIGH);
+   digitalWrite(Motor_Left2, LOW);
+   digitalWrite(Motor_Right1, HIGH);
+   digitalWrite(Motor_Right2, LOW);
  
    //Controlling the speed of the motors
    analogWrite(Left_Speed, leftValue);
@@ -127,8 +134,8 @@ char M;
    digitalWrite(Motor_Right1,HIGH);
    digitalWrite(Motor_Right2,LOW) ;
    //controlling the speed of the motors
-   analogWrite(Left_Speed,155);
-   analogWrite(Right_Speed,155);
+   analogWrite(Left_Speed,180);
+   analogWrite(Right_Speed,180);
  }
  void moveRight(int value)
  {
