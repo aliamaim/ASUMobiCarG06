@@ -1,13 +1,13 @@
 //Motor Driver
   //controls the speed of the motors
-   const int Left_Speed = 3;
-   const int Right_Speed = 2;
+   const int Right_Speed = 3;
+   const int Left_Speed = 2;
    //Front wheels
-   const int Motor_Left1 = 23;
-   const int Motor_Left2 = 22;
+   const int Motor_Right1 = 23;
+   const int Motor_Right2 = 22;
    //Back right wheel
-   const int Motor_Right1 = 24;
-   const int Motor_Right2 = 25;
+   const int Motor_Left1 = 25;
+   const int Motor_Left2 = 24;
  
 //Ultrasonic
    const int trigPin = 9;
@@ -16,7 +16,8 @@
    long duration;
    int distance;
 //Bluethooth
-char M;
+   char M;
+
  
  
  
@@ -58,6 +59,7 @@ char M;
  {
 
 
+
 // *** Ultrasonic ***  
    // Clears the trigPin
    digitalWrite(trigPin, LOW);
@@ -82,11 +84,26 @@ char M;
     if (Serial.available()>0)
     {     
        M = Serial.read();
+        
+        if(M == 'F')
+        {
+           if( distance > 30)
+           {
+             forward(255,255); 
+           }
+           else if (distance <= 30 && distance > 15)
+           {
+             forward(150,150);
+           }
+           else if(distance <= 15)
+           {
+             Stop();
+           }
+        }
+
+
        switch(M)
        {
-       case 'F':
-        forward(255,255);
-        break;
        case 'B':
         backward();
         break;
@@ -100,21 +117,16 @@ char M;
         Stop();
        }
     }
-
-//Ultrasonic reaction
-    if (distance <= 30 && distance > 15)
-    {
-      forward(150,150);
-    }
-    else if(distance <= 15)
+    else
     {
       Stop();
     }
-
- 
  }
- 
- void forward(int leftValue, int rightValue)
+//Ultrasonic reaction
+
+
+
+  void forward(int leftValue, int rightValue)
  {
    //Making all the motors go forward
    digitalWrite(Motor_Left1, HIGH);
@@ -129,13 +141,13 @@ char M;
  void backward()
  {
    //Making all motors go Backward
-   digitalWrite(Motor_Left1,HIGH);
-   digitalWrite(Motor_Left2,LOW);
-   digitalWrite(Motor_Right1,HIGH);
-   digitalWrite(Motor_Right2,LOW) ;
+   digitalWrite(Motor_Left1, LOW);
+   digitalWrite(Motor_Left2, HIGH);
+   digitalWrite(Motor_Right1, LOW);
+   digitalWrite(Motor_Right2, HIGH) ;
    //controlling the speed of the motors
-   analogWrite(Left_Speed,180);
-   analogWrite(Right_Speed,180);
+   analogWrite(Left_Speed,100);
+   analogWrite(Right_Speed,100);
  }
  void moveRight(int value)
  {
@@ -148,8 +160,8 @@ char M;
  }
  void Stop() 
 { 
-   digitalWrite(Motor_Left1,LOW);
-   digitalWrite(Motor_Left2,LOW);
-   digitalWrite(Motor_Right1,LOW);
-   digitalWrite(Motor_Right2,LOW);
-  }
+   digitalWrite(Motor_Left1, LOW);
+   digitalWrite(Motor_Left2, LOW);
+   digitalWrite(Motor_Right1, LOW);
+   digitalWrite(Motor_Right2, LOW);
+}
