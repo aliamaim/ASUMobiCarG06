@@ -32,7 +32,6 @@ It is required to develop a Mobile Controlled Car. The car allow easy driving wi
 * Implement custom printed circuit board with Arduino chip and replace the driving board of existing car toy with smart one.
 
 
-
 ## Contributors
 * Ali Amr
 * Salma Mounib
@@ -44,3 +43,7 @@ It is required to develop a Mobile Controlled Car. The car allow easy driving wi
 * Rahma Abdelhamed
 * Shehab Fouad
 * Shahd Zayed
+
+
+
+first video:basic movements link : https://www.youtube.com/watch?v=ETMeCm52c7g&feature=youtu.be
