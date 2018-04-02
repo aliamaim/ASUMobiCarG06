@@ -65,7 +65,26 @@
    digitalWrite(Motor_LeftBackward, LOW);
    digitalWrite(Motor_RightBackward, LOW);
 }
- 
+
+ float Ultrasonic()
+ {
+     // Clears the trigPin
+   digitalWrite(trigPin, LOW);
+   delayMicroseconds(2);
+
+   // Sets the trigPin on HIGH state for 10 micro seconds
+   digitalWrite(trigPin, HIGH);
+   delayMicroseconds(10);
+   digitalWrite(trigPin, LOW);
+
+   // Reads the echoPin, returns the sound wave travel time in microseconds
+   duration = pulseIn(echoPin, HIGH);
+
+   // Calculating the distance in cm
+   distance= duration*0.034/2;
+
+   return distance;
+ }
  
  void setup()
  {
@@ -89,69 +108,52 @@
 //Ultrasonic
     pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
     pinMode(echoPin, INPUT); // Sets the echoPin as an Input
-
- 
- 
-    delay(1000);
  }
 
 
  void loop() 
  {
-
-// *** Ultrasonic ***  
-   // Clears the trigPin
-   digitalWrite(trigPin, LOW);
-   delayMicroseconds(2);
-
-   // Sets the trigPin on HIGH state for 10 micro seconds
-   digitalWrite(trigPin, HIGH);
-   delayMicroseconds(10);
-   digitalWrite(trigPin, LOW);
-
-   // Reads the echoPin, returns the sound wave travel time in microseconds
-   duration = pulseIn(echoPin, HIGH);
-
-   // Calculating the distance in cm
-   distance= duration*0.034/2;
- 
-// End of Ultrasonic
+   
    //BLUETOOTH
-    if(distance <= 35)
+
+   if (Serial.available()>0)
     {
-       Stop();
-       delay(200);
-       MoveRight(0, 150);
-       delay(1000);
+        
+     M = Serial.read();
+     
+     if(Ultrasonic() <= 20)
+     {
+      Stop();
+      delay(200);
+      MoveRight(0, 100);
+      delay(1000);
+     }
+     else
+     {
+
+     switch(M)
+     {
+      case 'F':
+      Forward(230,230);
+      break;
+      case 'B':
+      Backward();
+      break;
+      case 'L':
+      MoveLeft(40, 220);
+      break;
+      case 'R':
+      MoveRight(40, 220);
+      break;
+      case 'S':
+      Stop();      
+     }
     }
-    else
-    {
-      if (Serial.available()>0)
-      {     
-       M = Serial.read();
-       switch(M)
-       {
-       case 'F':
-        Forward(230,230);
-        break;
-       case 'B':
-        Backward();
-        break;
-       case 'L':
-        MoveLeft(40, 220);
-        break;
-       case 'R':
-        MoveRight(40, 220);
-        break;
-       case 'S':
-        Stop();
-       }
-      }
-      else
-      {
-        Stop();
-      }
-     } 
-    delay(10);
+   }
+   else
+   {
+    Stop();
+   } 
 }
+
 
