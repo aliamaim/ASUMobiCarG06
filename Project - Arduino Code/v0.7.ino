@@ -19,6 +19,15 @@
 //Bluethooth
    char M;
 
+//Line Tracker
+int pinR= 50;
+int pinC= 51;
+int pinL= 52;
+
+int RState = 0;
+int CState = 0;
+int LState = 0;
+
 
 
  
@@ -66,25 +75,22 @@
    digitalWrite(Motor_RightBackward, LOW);
 }
 
- float Ultrasonic()
+ void LineTracker()
  {
-     // Clears the trigPin
-   digitalWrite(trigPin, LOW);
-   delayMicroseconds(2);
-
-   // Sets the trigPin on HIGH state for 10 micro seconds
-   digitalWrite(trigPin, HIGH);
-   delayMicroseconds(10);
-   digitalWrite(trigPin, LOW);
-
-   // Reads the echoPin, returns the sound wave travel time in microseconds
-   duration = pulseIn(echoPin, HIGH);
-
-   // Calculating the distance in cm
-   distance= duration*0.034/2;
-
-   return distance;
+   RState = digitalRead(pinR);
+   CState = digitalRead(pinC);
+   LState = digitalRead(pinL);
+   if ((RState == 1) && (CState == 0) && (LState ==1) )
+   {
+     Forward (150,150);
+   }
+   else
+   {
+     Stop();
+   }
+   
  }
+
  
  void setup()
  {
@@ -108,11 +114,31 @@
 //Ultrasonic
     pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
     pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+   
+//LineTracker
+   pinMode(pinL, INPUT);
+   pinMode(pinC, INPUT);
+   pinMode(pinR, INPUT);
  }
 
 
  void loop() 
  {
+//Ultrasonic
+   // Clears the trigPin
+   digitalWrite(trigPin, LOW);
+   delayMicroseconds(2);
+
+   // Sets the trigPin on HIGH state for 10 micro seconds
+   digitalWrite(trigPin, HIGH);
+   delayMicroseconds(10);
+   digitalWrite(trigPin, LOW);
+
+   // Reads the echoPin, returns the sound wave travel time in microseconds
+   duration = pulseIn(echoPin, HIGH);
+
+   // Calculating the distance in cm
+   distance= duration*0.034/2;
    
    //BLUETOOTH
 
@@ -121,12 +147,10 @@
         
      M = Serial.read();
      
-     if(Ultrasonic() <= 20)
+     if(distance <= 35)
      {
-      Stop();
-      delay(200);
-      MoveRight(0, 100);
-      delay(1000);
+      MoveRight(0, 150);
+      delay(500);
      }
      else
      {
@@ -134,26 +158,30 @@
      switch(M)
      {
       case 'F':
-      Forward(230,230);
+      Forward(255,255);
       break;
       case 'B':
       Backward();
       break;
       case 'L':
-      MoveLeft(40, 220);
+      MoveLeft(40, 255);
       break;
       case 'R':
-      MoveRight(40, 220);
+      MoveRight(40, 255);
       break;
       case 'S':
-      Stop();      
+      Stop();
+      break;      
      }
     }
    }
    else
    {
     Stop();
-   } 
+   }
+   delay(10); 
+   
 }
+
 
 
