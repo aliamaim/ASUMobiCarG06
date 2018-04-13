@@ -86,8 +86,9 @@ int LineTrackerON = 0;
      MoveRight(100,150);
    }
   
-   else if() //Left Case
+   else if((RState == 1) && (CState == 1) && (LState == 0)) //Left Case
    {
+     MoveLeft(150,100);
    }
    else if((RState == 0 && CState == 0 && LState == 0) || (RState == 1 && CState == 0 && LState == 0) || (RState == 0 && CState == 0 && LState == 1))
    {
