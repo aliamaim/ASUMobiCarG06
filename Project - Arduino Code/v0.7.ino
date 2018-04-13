@@ -1,5 +1,6 @@
 
 
+
 //Motor Driver
   //controls the speed of the motors
    const int Speed_Right = 3;
@@ -28,6 +29,8 @@ int pinL= 52;
 int RState = 0;
 int CState = 0;
 int LState = 0;
+int LineTrackerON = 0;
+
 
 
 
@@ -81,15 +84,22 @@ int LState = 0;
    RState = digitalRead(pinR);
    CState = digitalRead(pinC);
    LState = digitalRead(pinL);
-   if ((RState == 1) && (CState == 0) && (LState ==1) )
+   if ((RState == 1) && (CState == 0) && (LState == 1))
    {
-     Forward (150,150);
+     Forward(150,150);
    }
-   else if((RState==0) && (CState==1) && (LState==1) )
+   else if((RState == 0) && (CState == 1) && (LState == 1))
    {
      MoveRight(100,150);
-     }
-     
+   }
+  
+   else if() //Left Case
+   {
+   }
+   else if((RState == 0 && CState == 0 && LState == 0) || (RState == 1 && CState == 0 && LState == 0) || (RState == 0 && CState == 0 && LState == 1))
+   {
+     Forward(150,150);
+   }
    else
    {
      Stop();
@@ -130,7 +140,14 @@ int LState = 0;
 
  void loop() 
  {
-//Ultrasonic
+
+  //LineTracker
+  if(LineTrackerON == 1)
+  {
+    LineTracker();
+  }
+
+ //Ultrasonic
    // Clears the trigPin
    digitalWrite(trigPin, LOW);
    delayMicroseconds(2);
@@ -145,9 +162,11 @@ int LState = 0;
 
    // Calculating the distance in cm
    distance= duration*0.034/2;
+
+
+   
    
    //BLUETOOTH
-
    if (Serial.available()>0)
     {
         
@@ -177,6 +196,12 @@ int LState = 0;
       break;
       case 'S':
       Stop();
+      break;
+      case 'W':
+      LineTrackerON == 1;
+      break;
+      case 'w':
+      LineTrackerON == 0;
       break;      
      }
     }
