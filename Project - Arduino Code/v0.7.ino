@@ -1,4 +1,5 @@
 
+
 //Motor Driver
   //controls the speed of the motors
    const int Speed_Right = 3;
@@ -84,6 +85,11 @@ int LState = 0;
    {
      Forward (150,150);
    }
+   else if((RState==0) && (CState==1) && (LState==1) )
+   {
+     MoveRight(100,150);
+     }
+     
    else
    {
      Stop();
@@ -182,6 +188,3 @@ int LState = 0;
    delay(10); 
    
 }
-
-
-
