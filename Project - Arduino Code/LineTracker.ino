@@ -22,7 +22,6 @@ int pinL= 52;
 int RState = 0;
 int CState = 0;
 int LState = 0;
-int LineTrackerON = 0;
 
 
 
@@ -72,34 +71,6 @@ int LineTrackerON = 0;
    digitalWrite(Motor_RightBackward, LOW);
 }
 
- void LineTracker()
- {
-   RState = digitalRead(pinR);
-   CState = digitalRead(pinC);
-   LState = digitalRead(pinL);
-   if ((RState == 1) && (CState == 0) && (LState == 1))
-   {
-     Forward(150,150);
-   }
-   else if((RState == 0) && (CState == 1) && (LState == 1))
-   {
-     MoveRight(100,150);
-   }
-  
-   else if((RState == 1) && (CState == 1) && (LState == 0)) //Left Case
-   {
-     MoveLeft(150,100);
-   }
-   else if((RState == 0 && CState == 0 && LState == 0) || (RState == 1 && CState == 0 && LState == 0) || (RState == 0 && CState == 0 && LState == 1))
-   {
-     Forward(150,150);
-   }
-   else
-   {
-     Stop();
-   }
-   
- }
 
  
  void setup()
@@ -131,32 +102,33 @@ int LineTrackerON = 0;
  void loop() 
  {
 
-  //LineTracker
-  if(LineTrackerON == 1)
-  {
-    LineTracker();
-  }
-   
-   //BLUETOOTH
-   if (Serial.available()>0)
+
+   RState = digitalRead(pinR);
+   CState = digitalRead(pinC);
+   LState = digitalRead(pinL);
+   if ((RState == 1) && (CState == 0) && (LState == 1))
    {
-        
-     M = Serial.read();
-     
-     switch(M)
-     {
-      case 'W':
-      LineTrackerON == 1;
-      break;
-      case 'w':
-      LineTrackerON == 0;
-      break;      
-     }
+     Forward(150,150);
    }
-   else
+   else if((RState == 0) && (CState == 0) && (LState == 1))
    {
-    Stop();
+     MoveRight(70,130);
    }
-   delayMicroseconds(10); 
+   else if((RState == 0) && (CState == 1) && (LState == 1))
+   {
+    MoveRight(10,70);
+   }
+   else if((RState == 1) && (CState == 0) && (LState == 0)) //Left Case
+   {
+     MoveLeft(130,70);
+   }
+   else if((RState == 1) && (CState == 1) && (LState == 0))
+   {
+     MoveLeft(70,10);  
+   }
+   else if((RState == 0 && CState == 0 && LState == 0))
+   {
+     Forward(150,150);
+   }
    
 }
