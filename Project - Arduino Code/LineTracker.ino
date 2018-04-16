@@ -15,13 +15,13 @@
    char M;
 
 //Line Tracker
-int pinR= 50;
-int pinC= 51;
-int pinL= 52;
+int pinR= 28;
+int pinC= 26;
+int pinL= 27;
 
-int RState = 0;
-int CState = 0;
-int LState = 0;
+int RState = 1;
+int CState = 1;
+int LState = 1;
 
 
 
@@ -70,6 +70,30 @@ int LState = 0;
    digitalWrite(Motor_LeftBackward, LOW);
    digitalWrite(Motor_RightBackward, LOW);
 }
+void MoveRightSharp(int value, int valueToChange)
+{
+   digitalWrite(Motor_LeftForward, HIGH);
+   digitalWrite(Motor_RightForward, LOW);
+   
+   digitalWrite(Motor_LeftBackward, LOW);
+   digitalWrite(Motor_RightBackward, HIGH);
+ 
+   //Controlling the speed of the motors
+   analogWrite(Speed_Left, value);
+   analogWrite(Speed_Right, valueToChange);
+}
+void MoveLeftSharp(int valueToChange, int value)
+{
+   digitalWrite(Motor_LeftForward, LOW);
+   digitalWrite(Motor_RightForward, HIGH);
+   
+   digitalWrite(Motor_LeftBackward, HIGH);
+   digitalWrite(Motor_RightBackward, LOW);
+ 
+   //Controlling the speed of the motors
+   analogWrite(Speed_Left, valueToChange);
+   analogWrite(Speed_Right, value);
+}
 
 
  
@@ -106,29 +130,32 @@ int LState = 0;
    RState = digitalRead(pinR);
    CState = digitalRead(pinC);
    LState = digitalRead(pinL);
-   if ((RState == 1) && (CState == 0) && (LState == 1))
+   if ((LState == 0) && (CState == 1) && (RState == 0)) //1ST CASE MID
    {
-     Forward(150,150);
+     Forward(100,100);
    }
-   else if((RState == 0) && (CState == 0) && (LState == 1))
+   else if((LState == 0) && (CState == 1) && (RState == 1) ) //2ND Slight right
    {
-     MoveRight(70,130);
+     MoveRight(90,0);
    }
-   else if((RState == 0) && (CState == 1) && (LState == 1))
+   else if((LState == 0) && (CState == 0) && (RState == 1)) //3RD sharp right
    {
-    MoveRight(10,70);
+    MoveRightSharp(50,50);
    }
-   else if((RState == 1) && (CState == 0) && (LState == 0)) //Left Case
+   else if((LState == 1) && (CState == 1) && (RState == 0)) //4TH slight left
    {
-     MoveLeft(130,70);
+     MoveLeft(0,90);
    }
-   else if((RState == 1) && (CState == 1) && (LState == 0))
+   else if((LState == 1) && (CState == 0) && (RState == 0)) //5TH sharp left
    {
-     MoveLeft(70,10);  
+     MoveLeftSharp(50,50);  
    }
-   else if((RState == 0 && CState == 0 && LState == 0))
+   else if((LState == 1) && (CState == 1) && (RState == 1)) //6TH Intersection case
    {
-     Forward(150,150);
+     Forward(80,80);
    }
-   
+   else if((LState == 0) && (CState == 0) && (RState == 0)) //7th No line detected
+   {
+    Stop();
+   }
 }
