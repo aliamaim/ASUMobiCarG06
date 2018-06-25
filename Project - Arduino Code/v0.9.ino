@@ -1,13 +1,13 @@
 //Motor Driver
   //controls the speed of the motors
-   int Speed_Right = 3;
-   int Speed_Left = 2;
+   int Speed_Right = 6;
+   int Speed_Left = 5;
    //Front wheels
-   int Motor_RightForward = 23;
-   int Motor_RightBackward = 22;
+   int Motor_RightForward = 3;
+   int Motor_RightBackward = 2;
    //Back right wheel
-   int Motor_LeftForward = 25;
-   int Motor_LeftBackward = 24;
+   int Motor_LeftForward = 12;
+   int Motor_LeftBackward = 11;
  
 //Ultrasonic
    const int trigPin = 9;
@@ -17,16 +17,17 @@
    int distance;
 //Bluethooth
    char M;
+   char X;
 
 //Line Tracker
-   int pinR= 50;
-   int pinC= 51;
-   int pinL= 52;
+   int pinR= 4;
+   int pinC= 7;
+   int pinL= 8;
 
-   int RState = 0;
-   int CState = 0;
-   int LState = 0;
-   int State = 0;
+   int RState = 2;
+   int CState = 2;
+   int LState = 2;
+   int State = 2;
    int LastState = 0;
 
 
@@ -101,53 +102,57 @@ void MoveLeftSharp(int valueToChange, int value)
    analogWrite(Speed_Right, value);
 }
 
+
  void LineTracker()
  {
-  while(Serial.read() != 'w')
+  X = Serial.read();
+  while(X != 'w')
   {
    RState = digitalRead(pinR);
    CState = digitalRead(pinC);
    LState = digitalRead(pinL);
    if(LState == 0 && CState == 1 && RState == 0) //GoForward
    {
-    Forward(100,100);
+    Forward(80,80);
     LastState = 1;
    }
    else if(LState == 1 && CState == 0 && RState == 0) //GoLeft
    {
-    MoveLeft(0,90);
+    MoveLeft(15,90);
     LastState = 2;
    }
    else if(LState == 0 && CState == 0 && RState == 1) //GoRight
    {
-    MoveRight(90,0);
+    MoveRight(15,90);
     LastState = 3;
    }
    else if(LState == 1 && CState == 1 && RState == 1) //Intersection
    {
-    Forward(100,100);
+    Forward(80,80);
     LastState = 4;
    }
    else
    {
     switch(LastState)
     {
-      case '1':
-      Forward(100,100);
+      case 1:
+
+      Forward(60,60);
       break;
-      case '2':
-      MoveLeftSharp(50,50);
+      case 2:
+      MoveLeft(0,80);
       break;
-      case '3':
-      MoveRightSharp(50,50);
+      case 3:
+      MoveRight(0,80);
       break;
-      case '4':
-      Forward(100,100);
+      case 4:
+      Forward(60,60);
       break;
     }
    }
   }
  }
+
 
  
  void setup()
@@ -183,7 +188,6 @@ void MoveLeftSharp(int valueToChange, int value)
  void loop() 
  {
 
- 
 
  //Ultrasonic
    // Clears the trigPin
@@ -209,20 +213,19 @@ void MoveLeftSharp(int valueToChange, int value)
   {
         
      M = Serial.read();
-     
-     if(distance <= 35)
+
+    /* if(distance <= 35)
      {
       Stop();
-      MoveSharpRight(50, 50);
-      delay(500);
+      MoveRight(150, 0);
      }
      else
-     {
+     {*/
 
       switch(M)
       {
        case 'F':
-       Forward(200,200);
+       Forward(80,80);
        break;
        case 'B':
        Backward();
@@ -236,9 +239,14 @@ void MoveLeftSharp(int valueToChange, int value)
        case 'W':
        LineTracker();
        break;
-       case '
+       case 'S':
+       Stop();
+       break; 
       }
-     }
-   delay(10); 
-   
-  }
+     } 
+  //}
+ }
+
+
+
+ // 1cm = 0.0251576 seconds
