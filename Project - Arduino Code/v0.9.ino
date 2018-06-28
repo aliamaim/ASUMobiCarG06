@@ -19,6 +19,10 @@
    char M;
    char X;
 
+//Distance Forward Function
+   unsigned int integerValue;
+   char incomingByte;
+
 //Line Tracker
    int pinR= 4;
    int pinC= 7;
@@ -153,6 +157,24 @@ void MoveLeftSharp(int valueToChange, int value)
   }
  }
 
+void DistanceForward()
+{
+  
+  while(!Serial.available());
+  integerValue = 0;
+  while(1)
+  {
+    incomingByte = Serial.read();
+    if(incomingByte == 'e') break;
+    if(incomingByte == -1) continue;
+    integerValue *= 10;
+    integerValue = ((incomingByte - 48) + integerValue);
+   }
+
+   Forward(90,90);
+   delay(integerValue * 28.25);
+   Stop();
+}
 
  
  void setup()
@@ -225,7 +247,7 @@ void MoveLeftSharp(int valueToChange, int value)
       switch(M)
       {
        case 'F':
-       Forward(80,80);
+       Forward(150,150);
        break;
        case 'B':
        Backward();
@@ -239,6 +261,8 @@ void MoveLeftSharp(int valueToChange, int value)
        case 'W':
        LineTracker();
        break;
+       case 'D':
+       DistanceForward();
        case 'S':
        Stop();
        break; 
@@ -248,5 +272,3 @@ void MoveLeftSharp(int valueToChange, int value)
  }
 
 
-
- // 1cm = 0.0251576 seconds
