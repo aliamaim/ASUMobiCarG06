@@ -51,7 +51,7 @@
    analogWrite(Speed_Left, leftValue);
    analogWrite(Speed_Right, rightValue);
  }
- void Backward()
+ void Backward(int leftValue,int rightValue)
  {
    //Making all motors go Backward
    digitalWrite(Motor_LeftForward, LOW);
@@ -62,8 +62,8 @@
 
 
    //controlling the speed of the motors
-   analogWrite(Speed_Left,150);
-   analogWrite(Speed_Right,150);
+   analogWrite(Speed_Left,leftValue);
+   analogWrite(Speed_Right,leftValue);
  }
  void MoveRight(int valueToChange, int value)
  {
@@ -156,7 +156,7 @@ void MoveLeftSharp(int valueToChange, int value)
    }
   }
  }
-
+//Forward with distance
 void DistanceForward()
 {
   
@@ -171,12 +171,125 @@ void DistanceForward()
     integerValue = ((incomingByte - 48) + integerValue);
    }
 
-   Forward(90,90);
+   Forward(95,90);
    delay(integerValue * 28.25);
    Stop();
 }
+//backward with distance
+void DistanceBackward()
+{
+  
+  while(!Serial.available());
+  integerValue = 0;
+  while(1)
+  {
+    incomingByte = Serial.read();
+    if(incomingByte == 'e') break;
+    if(incomingByte == -1) continue;
+    integerValue *= 10;
+    integerValue = ((incomingByte - 48) + integerValue);
+   }
 
- 
+   Backward(89,96);
+   delay(integerValue * 28.25);
+   Stop();
+}
+// Certain Angle 
+//int TIMETAKEN=10;
+//move left with certain degree
+void AngleMoveLeft()
+{
+  
+  while(!Serial.available());
+  integerValue = 0;
+  while(1)
+  {
+    incomingByte = Serial.read();
+    if(incomingByte == 'e') break;
+    if(incomingByte == -1) continue;
+    integerValue *= 10;
+    integerValue = ((incomingByte - 48) + integerValue);
+   }
+
+   MoveLeft(0,60);
+   delay((integerValue) * 16.9);//TIME TAKEN FOR EACH DEGREE
+   Stop();
+}
+//move right with certain degree
+void AngleMoveRight()
+{
+  
+  while(!Serial.available());
+  integerValue = 0;
+  while(1)
+  {
+    incomingByte = Serial.read();
+    if(incomingByte == 'e') break;
+    if(incomingByte == -1) continue;
+    integerValue *= 10;
+    integerValue = ((incomingByte - 48) + integerValue);
+   }
+
+   MoveRight(0,60);
+   delay((integerValue)* 16.9);//TIME TAKEN FOR EACH DEGREE
+   Stop();
+}
+
+
+void RectangleAnti()
+{
+   Forward(95,90);
+   delay(30 * 28.25);
+   Stop();
+   delay(200);
+   MoveLeft(0,60);
+   delay(90 * 16.85);
+   Stop();
+   delay(200);
+   Forward(95,90);
+   delay(50 * 28.25);
+   Stop();
+   delay(200);
+   MoveLeft(0,60);
+   delay(90 * 16.85);
+   Stop();
+   delay(200);
+   Forward(95,90);
+   delay(30 * 28.25);
+   Stop();
+   delay(200);
+   MoveLeft(0,60);
+   delay(90 * 16.85);
+   Stop();
+   delay(200);
+   Forward(95,90);
+   delay(50 * 28.25);
+   Stop();
+   delay(200); 
+   MoveLeft(0,60);
+   delay(90 * 16.85);
+   Stop();
+}
+//Circle 
+void Circle()
+{
+  delay(1000);
+  Forward(60,100);
+  delay(360 * 14.3);
+  Stop();
+}
+
+//Infinity shape
+void InfinityShape()
+{
+  Circle();
+  delay(1000);
+  Forward(100,50);
+  delay(360 * 11.5);
+  Stop();
+}
+
+
  void setup()
  {
  
@@ -209,8 +322,13 @@ void DistanceForward()
 
  void loop() 
  {
-
-
+   /*
+   delay(1000);
+   MoveRight(0,70);
+   delay(7000);
+   Stop();
+   delay(2000);
+   */
  //Ultrasonic
    // Clears the trigPin
    digitalWrite(trigPin, LOW);
@@ -250,7 +368,7 @@ void DistanceForward()
        Forward(150,150);
        break;
        case 'B':
-       Backward();
+       Backward(150,150);
        break;
        case 'L':
        MoveLeft(40, 255);
@@ -261,8 +379,23 @@ void DistanceForward()
        case 'W':
        LineTracker();
        break;
-       case 'D':
+       case 'G':
        DistanceForward();
+       break;
+       case 'H':
+       DistanceBackward();
+       break;
+       case 'I':
+       AngleMoveRight();
+       break;
+       case 'J':
+       AngleMoveLeft();
+       break;
+       case 'D':
+       RectangleAnti();
+       Circle();
+       InfinityShape();
+       break;
        case 'S':
        Stop();
        break; 
@@ -270,5 +403,3 @@ void DistanceForward()
      } 
   //}
  }
-
-
